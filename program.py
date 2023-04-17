@@ -76,5 +76,14 @@ class MLP(object):
                 print("Derivatives for w{}: {}".format(i, self.derivatives[i]))
                 
         return loss
+    
+    
+    def gradient_descent(self, learning_rate):
+        for i in range(len(self.weights)):
+            weights = self.weights[i]
+            derivatives = self.derivatives[i]
+            weights += derivatives * learning_rate
+            
+            
             
         

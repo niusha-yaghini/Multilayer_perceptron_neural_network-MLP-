@@ -1,5 +1,5 @@
 import numpy as np
-from random import random
+from random import *
 
 
 class MLP(object):
@@ -157,24 +157,29 @@ class MLP(object):
 if __name__ == "__main__":
 
     # create a dataset to train a network for the sum operation
-    items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
+
+    items = np.array([[uniform(0, 10) for _ in range(2)] for _ in range(1000)])
+    # random.randint --> returns int
+    # random.uniform --> return floats
+
+    # items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
     targets = np.array([[i[0] + i[1]] for i in items])
 
     # create a Multilayer Perceptron with one hidden layer
     mlp = MLP(2, [5], 1)
 
     # train network
-    mlp.train(items, targets, 50, 1)
+    mlp.train(items, targets, 50, 0.1)
 
     # create dummy data
-    input = np.array([1, 2])
-    target = np.array([21])
+    input = np.array([3.1, 2.4])
+    target = np.array([5.5])
 
     # get a prediction
     output = mlp.forward_propagate(input)
 
     print()
     print("Our network believes that {} + {} is equal to {}".format(input[0], input[1], output[0]))
-    print(f"Our network believes that {input[0]} + {input[1]} is equal to {output[0]}")
+    # print(f"Our network believes that {input[0]} + {input[1]} is equal to {output[0]}")
 
     print()

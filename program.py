@@ -61,7 +61,7 @@ class MLP(object):
         return activations
 
 
-    def back_propagate(self, loss):
+    def back_propagate(self, loss, verbose=False):
         #Backpropogates an loss signal.
         # Returns: loss (ndarray): The final loss of the input
 
@@ -88,9 +88,13 @@ class MLP(object):
 
             # backpropogate the next loss
             loss = np.dot(delta, self.weights[i].T)
+            
+        
+            if verbose:
+                print("Derivatives for w{}: {}".format(i, self.derivatives[i]))
 
 
-    def train(self, inputs, targets, iteration, learning_rate):
+    def train(self, inputs, targets, iteration, learning_rate, verbose=False):
         #Trains model running forward prop and backprop
 
         # now enter the training loop
@@ -115,8 +119,9 @@ class MLP(object):
                 # keep track of the MSE for reporting later
                 sum_loss += self._mse(target, output)
 
-            # Epoch complete, report the training loss
-            print("Loss: {} at epoch {}".format(sum_loss / len(items), i+1))
+            if verbose:
+                # Iteration complete, report the training loss
+                print("Loss: {} at iteration {}".format(sum_loss / len(items), i+1))
 
         print("Training complete!")
         print("=====")
@@ -159,15 +164,17 @@ if __name__ == "__main__":
     mlp = MLP(2, [5], 1)
 
     # train network
-    mlp.train(items, targets, 50, 0.1)
+    mlp.train(items, targets, 50, 1)
 
     # create dummy data
-    input = np.array([0.3, 0.1])
-    target = np.array([0.4])
+    input = np.array([1, 2])
+    target = np.array([21])
 
     # get a prediction
     output = mlp.forward_propagate(input)
 
     print()
     print("Our network believes that {} + {} is equal to {}".format(input[0], input[1], output[0]))
+    print(f"Our network believes that {input[0]} + {input[1]} is equal to {output[0]}")
+
     print()

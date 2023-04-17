@@ -103,16 +103,29 @@ class MLP(object):
                 #apply gradient descent
                 self.gradient_descent(learning_rate)
                 
-                sum_loss += self._mse(target, output)
+                sum_loss += self._asl(target, output)
                 
                 
             #print loss each iteration
             if(verbose):
                 print("Loss: {} at iteration {}".format(sum_loss/len(inputs), i))
-                
-            
     
+                
+    #average squad loss 
+    def _asl(self, target, output):
+        return np.average((target-output)**2)
+    
+    
+    def _sigmoid_derivative(self, x):
+        return x * (0.1 - x)
             
             
-            
+    def _sigmoid(self, x):
+        #sigmoid activation function
+        
+        y = 1.0 / (1 + np.exp(-x))   
+        return y
+    
+    
+         
         

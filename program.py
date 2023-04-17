@@ -85,5 +85,34 @@ class MLP(object):
             weights += derivatives * learning_rate
             
             
+    def train(self, inputs, targets, iterations, learning_rate, verbose=False):
+        
+        for i in range(iterations):
+            sum_loss = 0
+            for input, target in zip(inputs, targets):
+                
+                #forward propagation
+                output = self.forward_propagates(input)
+                
+                #calculate loss
+                loss = target - output
+                
+                #back propagation
+                self.back_propagate(loss)
+                
+                #apply gradient descent
+                self.gradient_descent(learning_rate)
+                
+                sum_loss += self._mse(target, output)
+                
+                
+            #print loss each iteration
+            if(verbose):
+                print("Loss: {} at iteration {}".format(sum_loss/len(inputs), i))
+                
+            
+    
+            
+            
             
         

@@ -160,7 +160,7 @@ if __name__ == "__main__":
     # random.uniform --> return floats
 
     train_items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
-    train_targets = np.array([[i[0] + i[1]] for i in items])
+    train_targets = np.array([[i[0] + i[1]] for i in train_items])
 
     # create a Multilayer Perceptron with one hidden layer
     mlp = MLP(2, [5], 1)

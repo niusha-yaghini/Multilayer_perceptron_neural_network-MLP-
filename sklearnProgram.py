@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_squared_error
-import my_anger_points as angr
 
 
 # the calculating function
@@ -23,9 +22,6 @@ def making_x_points(points, domain):
 # making the y points    
 def making_y_points(x):
     y = np.array(my_function(x)).reshape(-1, 1)
-    print(y)
-    a = y[0]
-    print(a)
     return y
 
 def train(iteration, hidden_layer, x_train, y_train):
@@ -36,7 +32,7 @@ def train(iteration, hidden_layer, x_train, y_train):
                                     shuffle=True).fit(x_train, y_train.ravel())
     return trained_network
 
-def diagram(x_train, y_train, x_test, y_test, loss, points):
+def diagram(x_train, y_train, x_test, y_test, y_result, loss, points):
     fig, ax = plt.subplots()
     train_plt, = plt.plot(x_train, y_train, label='Train',  linewidth=3, linestyle=':')
     test_plt,  = plt.plot(x_test, y_result, label='Test')
@@ -51,12 +47,8 @@ def diagram(x_train, y_train, x_test, y_test, loss, points):
 
 if __name__ == "__main__":
 
-    # anger train points
-    x_anger_train = angr.anger_x_points()
-    y_anger_train = angr.anger_y_points()
-
     # making train points
-    train_points = 1000
+    train_points = 2000
     train_domain = (0, 25)
     x_train = making_x_points(train_points, train_domain)
     y_train = making_y_points(x_train)
@@ -73,7 +65,7 @@ if __name__ == "__main__":
     y_test = making_y_points(x_test)
     
     # training 
-    iterations = 500
+    iterations = 2000
     hidden_layer = (20, 15, 10, 20)
     trained_network = train(iterations, hidden_layer, x_train, y_train)
 
@@ -84,4 +76,4 @@ if __name__ == "__main__":
     loss = mean_squared_error(y_result, y_test)
 
     # making the diagram
-    diagram(x_train, y_train, x_test, y_test, loss, train_points) 
+    diagram(x_train, y_train, x_test, y_test, y_result, loss, train_points) 

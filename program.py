@@ -1,7 +1,6 @@
 import numpy as np
 from random import *
 
-
 class MLP(object):
     #A Multilayer Perceptron class.
 
@@ -139,7 +138,6 @@ class MLP(object):
 
     def _sigmoid(self, x):
         #Sigmoid activation function
-
         y = 1.0 / (1 + np.exp(-x))
         return y
 
@@ -158,25 +156,24 @@ if __name__ == "__main__":
 
     # create a dataset to train a network for the sum operation
 
-    items = np.array([[uniform(0, 10) for _ in range(2)] for _ in range(1000)])
     # random.randint --> returns int
     # random.uniform --> return floats
 
-    # items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
-    targets = np.array([[i[0] + i[1]] for i in items])
+    train_items = np.array([[random()/2 for _ in range(2)] for _ in range(1000)])
+    train_targets = np.array([[i[0] + i[1]] for i in items])
 
     # create a Multilayer Perceptron with one hidden layer
     mlp = MLP(2, [5], 1)
 
     # train network
-    mlp.train(items, targets, 50, 0.1)
+    mlp.train(train_items, train_targets, 50, 0.1)
 
     # create dummy data
-    input = np.array([3.1, 2.4])
-    target = np.array([5.5])
+    test_input = np.array([0.1, 0.4])
+    # test_target = np.array([5.5])
 
     # get a prediction
-    output = mlp.forward_propagate(input)
+    output = mlp.forward_propagate(test_input)
 
     print()
     print("Our network believes that {} + {} is equal to {}".format(input[0], input[1], output[0]))

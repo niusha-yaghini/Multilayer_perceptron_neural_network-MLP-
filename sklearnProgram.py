@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPRegressor
 from sklearn.metrics import mean_squared_error
+import my_anger_points as angr
 
 
 # the calculating function
@@ -16,13 +17,16 @@ def calculate_loss(estimated, goal):
 
 # making the x points
 def making_x_points(points, domain):
-    x_train = np.linspace(domain[0], domain[1], points).reshape(-1, 1)
-    return x_train
+    x = np.linspace(domain[0], domain[1], points).reshape(-1, 1)
+    return x
     
 # making the y points    
-def making_y_points(x_train):
-    y_train = np.array(my_function(x_train)).reshape(-1, 1)
-    return y_train
+def making_y_points(x):
+    y = np.array(my_function(x)).reshape(-1, 1)
+    print(y)
+    a = y[0]
+    print(a)
+    return y
 
 def train(iteration, hidden_layer, x_train, y_train):
     # doing the training here
@@ -47,15 +51,24 @@ def diagram(x_train, y_train, x_test, y_test, loss, points):
 
 if __name__ == "__main__":
 
+    # anger train points
+    x_anger_train = angr.anger_x_points()
+    y_anger_train = angr.anger_y_points()
+
     # making train points
     train_points = 1000
     train_domain = (0, 25)
     x_train = making_x_points(train_points, train_domain)
     y_train = making_y_points(x_train)
     
+    # adding noises
+    t = train_points/2
+    y_train[0] = y_train[0] * 5
+    y_train[train_points-1] = y_train[train_points-1] / 13
+    
     # making test points
     test_points = train_points*3
-    test_domain = (-5, 35)
+    test_domain = (-5, 30)
     x_test = making_x_points(test_points, test_domain)
     y_test = making_y_points(x_test)
     
